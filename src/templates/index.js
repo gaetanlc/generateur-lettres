@@ -1,10 +1,10 @@
 // src/templates/index.js
 import { congeLocataire } from "./congeLocataire";
 import { resiliationSalleSport } from "./resiliationSalleSport";
+import { resiliationBox } from "./resiliationBox";
 
 // La liste de TOUS les templates du site.
-// Ajouter un template = l'importer et l'ajouter ici. C'est tout.
-export const templates = [congeLocataire, resiliationSalleSport];
+export const templates = [congeLocataire, resiliationSalleSport, resiliationBox];
 
 // Petit helper pour retrouver un template par son id
 export function getTemplate(id) {

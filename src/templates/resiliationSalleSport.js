@@ -1,8 +1,8 @@
 // src/templates/resiliationSalleSport.js
+import { formaterDateFr } from "../utils/dates";
 
 export const resiliationSalleSport = {
     id: "resiliation-salle-sport",
-    titre: "Résiliation d'abonnement de salle de sport",
     titre: "Résiliation d'abonnement de salle de sport",
     image: "/images/sport.jpg",
     categorie: "Sport & loisirs",
@@ -19,12 +19,9 @@ export const resiliationSalleSport = {
     ],
 
     regles: (valeurs) => {
-        let dateEnvoi = valeurs.dateEnvoi;
-        if (dateEnvoi) {
-            const [annee, mois, jour] = dateEnvoi.split("-");
-            dateEnvoi = `${jour}/${mois}/${annee}`;
-        }
-        return { dateEnvoi };
+        return {
+            dateEnvoi: formaterDateFr(valeurs.dateEnvoi),
+        };
     },
 
     corps: `{{prenom}} {{nom}}
