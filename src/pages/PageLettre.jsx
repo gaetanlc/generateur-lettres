@@ -7,7 +7,6 @@ import { exporterPdf } from "../utils/exportPdf";
 import FormulaireDynamique from "../components/FormulaireDynamique";
 
 function PageLettre() {
-  // Récupère le :id depuis l'URL (ex: /lettre/conge-locataire)
   const { id } = useParams();
   const template = getTemplate(id);
 
@@ -17,7 +16,6 @@ function PageLettre() {
     setValeurs((prec) => ({ ...prec, [name]: valeur }));
   };
 
-  // Si l'id de l'URL ne correspond à aucun template
   if (!template) {
     return (
       <div className="app">
@@ -29,44 +27,68 @@ function PageLettre() {
 
   const lettre = renderTemplate(template, valeurs);
 
-  // Champs requis non remplis (état dérivé : calculé, pas stocké)
   const champsManquants = template.champs.filter(
     (champ) => champ.required && !valeurs[champ.name]
   );
-
   const formulaireComplet = champsManquants.length === 0;
 
+  const nbRequis = template.champs.filter((c) => c.required).length;
+  const nbRemplis = nbRequis - champsManquants.length;
+  const progression = Math.round((nbRemplis / nbRequis) * 100);
+
   return (
-    <div className="app">
-      <Link to="/" className="lien-retour">← Tous les modèles</Link>
-      <h1>{template.titre}</h1>
+    <div>
+      <div className="bandeau-lettre" style={{ backgroundImage: `url(${template.image})` }}>
+        <div className="bandeau-contenu">
+          <Link to="/" className="lien-retour-bandeau">← Tous les modèles</Link>
+          <span className="carte-categorie">{template.categorie}</span>
+          <h1>{template.titre}</h1>
+        </div>
+      </div>
 
-      <div className="deux-colonnes">
-        <FormulaireDynamique
-          champs={template.champs}
-          valeurs={valeurs}
-          onChange={handleChange}
-        />
+      <div className="app">
+        <div className="deux-colonnes">
+          <div className="colonne-formulaire">
+            <div className="barre-progression">
+              <div className="barre-progression-infos">
+                <span>Votre lettre</span>
+                <span>{nbRemplis}/{nbRequis} champs</span>
+              </div>
+              <div className="barre-piste">
+                <div
+                  className="barre-remplissage"
+                  style={{ width: `${progression}%` }}
+                />
+              </div>
+            </div>
 
-        <div className="colonne-preview">
-          <div className="zone-export">
-            {!formulaireComplet && (
-              <span className="aide-export">
-                {champsManquants.length} champ
-                {champsManquants.length > 1 ? "s" : ""} requis à remplir
-              </span>
-            )}
-            <button
-              className="btn-export"
-              disabled={!formulaireComplet}
-              onClick={() =>
-                exporterPdf(lettre, `${template.id}-${valeurs.nom ?? ""}`)
-              }
-            >
-              📄 Télécharger en PDF
-            </button>
+            <FormulaireDynamique
+              champs={template.champs}
+              valeurs={valeurs}
+              onChange={handleChange}
+            />
           </div>
-          <pre className="preview">{lettre}</pre>
+
+          <div className="colonne-preview">
+            <div className="zone-export">
+              {!formulaireComplet && (
+                <span className="aide-export">
+                  {champsManquants.length} champ
+                  {champsManquants.length > 1 ? "s" : ""} requis à remplir
+                </span>
+              )}
+              <button
+                className="btn-export"
+                disabled={!formulaireComplet}
+                onClick={() =>
+                  exporterPdf(lettre, `${template.id}-${valeurs.nom ?? ""}`)
+                }
+              >
+                📄 Télécharger en PDF
+              </button>
+            </div>
+            <pre className="preview">{lettre}</pre>
+          </div>
         </div>
       </div>
     </div>
