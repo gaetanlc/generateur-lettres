@@ -29,6 +29,13 @@ function PageLettre() {
 
   const lettre = renderTemplate(template, valeurs);
 
+  // Champs requis non remplis (état dérivé : calculé, pas stocké)
+  const champsManquants = template.champs.filter(
+    (champ) => champ.required && !valeurs[champ.name]
+  );
+
+  const formulaireComplet = champsManquants.length === 0;
+
   return (
     <div className="app">
       <Link to="/" className="lien-retour">← Tous les modèles</Link>
@@ -42,12 +49,23 @@ function PageLettre() {
         />
 
         <div className="colonne-preview">
-          <button
-            className="btn-export"
-            onClick={() => exporterPdf(lettre, `${template.id}-${valeurs.nom ?? ""}`)}
-          >
-            📄 Télécharger en PDF
-          </button>
+          <div className="zone-export">
+            {!formulaireComplet && (
+              <span className="aide-export">
+                {champsManquants.length} champ
+                {champsManquants.length > 1 ? "s" : ""} requis à remplir
+              </span>
+            )}
+            <button
+              className="btn-export"
+              disabled={!formulaireComplet}
+              onClick={() =>
+                exporterPdf(lettre, `${template.id}-${valeurs.nom ?? ""}`)
+              }
+            >
+              📄 Télécharger en PDF
+            </button>
+          </div>
           <pre className="preview">{lettre}</pre>
         </div>
       </div>

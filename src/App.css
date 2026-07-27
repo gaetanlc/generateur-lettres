@@ -112,6 +112,23 @@ form {
   gap: 1rem;
 }
 
+.zone-export {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.aide-export {
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+.btn-export:disabled {
+  background: #c7d2fe;
+  cursor: not-allowed;
+}
+
 .btn-export {
   align-self: flex-end;
   padding: 0.65rem 1.25rem;
@@ -125,11 +142,11 @@ form {
   transition: background 0.15s, transform 0.1s;
 }
 
-.btn-export:hover {
+.btn-export:hover:not(:disabled) {
   background: #4338ca;
 }
 
-.btn-export:active {
+.btn-export:active:not(:disabled) {
   transform: scale(0.98);
 }
 
