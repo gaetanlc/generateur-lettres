@@ -152,7 +152,23 @@ form {
 
 /* ===== Accueil ===== */
 .hero {
+  position: relative;
   padding: 3.5rem 0 2.5rem;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -2rem;
+  left: -10rem;
+  width: 550px;
+  height: 350px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(147, 51, 234, 0.09),
+    transparent 70%
+  );
+  pointer-events: none;
 }
 
 .hero h1 {
@@ -357,4 +373,92 @@ form {
   background: linear-gradient(90deg, #4f46e5, #9333ea);
   border-radius: 999px;
   transition: width 0.35s ease;
+}
+
+/* ===== Hero : preuves ===== */
+.hero-preuves {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4f46e5;
+}
+
+/* ===== Titres de section ===== */
+.titre-section {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 1.25rem;
+}
+
+.compte-modeles {
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+/* ===== Animation d'entrée des cartes ===== */
+@keyframes apparition {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.carte-template {
+  animation: apparition 0.45s ease both;
+}
+
+/* ===== Comment ça marche ===== */
+.comment-ca-marche {
+  margin-top: 4rem;
+  padding: 2.5rem 0 3rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.grille-etapes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.carte-etape {
+  position: relative;
+  background: white;
+  padding: 1.75rem 1.5rem 1.5rem;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+}
+
+.etape-numero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #4f46e5, #9333ea);
+  color: white;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.carte-etape h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+}
+
+.carte-etape p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: #6b7280;
 }
